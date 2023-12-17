@@ -9,7 +9,7 @@ import parser from "html-react-parser";
 
 export default function NoteItem({title, body, createdAt, archived, id, onDelete, onArchive}) {
   return (
-    <div className="flex justify-between w-full bg-cw h-32 rounded-lg">
+    <div className="flex justify-between w-full bg-cw h-fit9 rounded-lg">
       <div className="flex flex-col gap-2 p-2">
         <div className="flex flex-col gap-1">
           <Link to={`/notes/${id}`} className="text-xl text-tb font-semibold">
