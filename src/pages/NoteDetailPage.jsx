@@ -1,44 +1,57 @@
-import React from "react";
-import { getNote } from "../utils/local-data";
+import React, { useEffect, useState } from "react";
+import { getNote } from "../utils/network-data";
 import NoteDetail from "../components/NoteDetail";
 import { useParams } from "react-router-dom";
-import PropTypes from "prop-types";
 import Header from "../components/Header";
-import Navigation from "../components/Navigation";
+import ThemeContext from "../context/ThemeContext";
 
-export default function NoteDetailPageWrapper() {
+export default function NoteDetailPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [note, setNote] = useState();
   const { id } = useParams();
-  return <NoteDetailPage id={id} />;
-}
-
-class NoteDetailPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      note: getNote(props.id),
+  const { theme } = React.useContext(ThemeContext);
+  useEffect(() => {
+    const getNoteDetail = async (id) => {
+      const { data } = await getNote(id);
+      setNote(data);
     };
-  }
+    getNoteDetail(id);
+    setIsLoading(false);
+    return () => {
+      setNote({});
+    };
+  }, [id]);
 
-  render() {
-    if (this.state.note === undefined) {
-      return (
-        <p className="mx-20 mt-5 font-bold text-center">Note is not found!</p>
-      );
-    }
-
+  if (isLoading) {
     return (
-      <>
-        <Header />
-        <Navigation />
-        <section className="mx-20 mt-5 bg-cw">
-          <NoteDetail {...this.state.note} />
-        </section>
-      </>
+      <p
+        className={`text-center h-screen font-bold ${
+          theme === "light" ? "text-tb" : "text-tg"
+        }`}
+      >
+        Loading note...
+      </p>
     );
   }
-}
 
-NoteDetailPage.propTypes = {
-  id: PropTypes.string.isRequired,
-};
+  if (!note) {
+    return (
+      <p
+        className={`mx-20 text-2xl font-bold text-center ${
+          theme === "light" ? "text-tb" : "text-tg"
+        }`}
+      >
+        Note is not found!
+      </p>
+    );
+  }
+
+  return (
+    <>
+      <Header />
+      <section className="mx-20 mt-5 bg-cw rounded-lg">
+        <NoteDetail {...note} />
+      </section>
+    </>
+  );
+}

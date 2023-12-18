@@ -1,100 +1,72 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import NoteList from "../components/NoteList";
-import { getActiveNotes, deleteNote, archiveNote } from "../utils/local-data";
 import { useSearchParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import PropTypes from "prop-types";
+import { deleteNote, getActiveNotes, archiveNote } from "../utils/network-data";
 import Header from "../components/Header";
-import Navigation from "../components/Navigation";
+import ThemeContext from "../context/ThemeContext";
 
-export default function HomePageWrapper() {
-  const [searhParams, setSearchParams] = useSearchParams();
-  const keyword = searhParams.get("keyword");
-  function changeSearchParams(keyword) {
+export default function HomePage() {
+  const [activeNotes, setActiveNotes] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const search = searchParams.get("keyword");
+  const [keyword, setKeyword] = useState(search || "");
+  const { theme } = React.useContext(ThemeContext);
+
+  useEffect(() => {
+    getActiveNotes().then(({ data }) => {
+      setActiveNotes(data);
+    });
+  }, []);
+
+  const onDeleteHandler = async (id) => {
+    await deleteNote(id);
+    const { data } = await getActiveNotes();
+    setActiveNotes(data);
+  };
+  const onArchiveHandler = async (id) => {
+    await archiveNote(id);
+    const { data } = await getActiveNotes();
+    setActiveNotes(data);
+  };
+  const onKeywordChangeHandler = (keyword) => {
     setSearchParams({ keyword });
-  }
+    setKeyword(keyword);
+  };
+
+  const filteredActiveNotes = activeNotes.filter((note) => {
+    return note.title.toLowerCase().includes(keyword.toLowerCase());
+  });
   return (
-    <HomePage defaultKeyword={keyword} keywordChange={changeSearchParams} />
+    <>
+      <Header />
+      <div className="mx-20">
+        <div className="flex justify-between items-center">
+          <h2
+            className={`font-semibold text-3xl ${
+              theme === "light" ? "text-tb" : "text-tw"
+            } my-5`}
+          >
+            Active notes
+          </h2>
+          <SearchBar keyword={keyword} keywordChange={onKeywordChangeHandler} />
+        </div>
+        {activeNotes.length > 0 ? (
+          <NoteList
+            notes={filteredActiveNotes}
+            onDelete={onDeleteHandler}
+            onArchive={onArchiveHandler}
+          />
+        ) : (
+          <p
+            className={`text-center font-bold ${
+              theme === "light" ? "text-tb" : "text-tw"
+            }`}
+          >
+            Tidak ada catatan aktif
+          </p>
+        )}
+      </div>
+    </>
   );
 }
-
-class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeNotes: getActiveNotes(),
-      keyword: props.defaultKeyword || "",
-    };
-    this.onDeleteHandler = this.onDeleteHandler.bind(this);
-    this.onArchiveHandler = this.onArchiveHandler.bind(this);
-    this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
-  }
-
-  onDeleteHandler(id) {
-    deleteNote(id);
-    this.setState(() => {
-      return {
-        activeNotes: getActiveNotes(),
-      };
-    });
-  }
-
-  onArchiveHandler(id) {
-    archiveNote(id);
-    this.setState(() => {
-      return {
-        activeNotes: getActiveNotes(),
-      };
-    });
-  }
-
-  onKeywordChangeHandler(keyword) {
-    this.setState(() => {
-      return {
-        keyword,
-      };
-    });
-    this.props.keywordChange(keyword);
-  }
-
-  render() {
-    const filteredActiveNotes = this.state.activeNotes.filter((note) => {
-      return note.title
-        .toLowerCase()
-        .includes(this.state.keyword.toLowerCase());
-    });
-    return (
-      <>
-        <Header />
-        <Navigation />
-        <div className="mx-20">
-          <div className="flex justify-between items-center">
-            <h2 className="font-semibold text-3xl text-tb my-5">
-              Active notes
-            </h2>
-            <SearchBar
-              keyword={this.state.keyword}
-              keywordChange={this.onKeywordChangeHandler}
-            />
-          </div>
-          {this.state.activeNotes.length > 0 ? (
-            <NoteList
-              notes={filteredActiveNotes}
-              onDelete={this.onDeleteHandler}
-              onArchive={this.onArchiveHandler}
-            />
-          ) : (
-            <p className="text-center font-bold text-xl text-tb">
-              Tidak ada catatan aktif
-            </p>
-          )}
-        </div>
-      </>
-    );
-  }
-}
-
-HomePage.propTypes = {
-  keyword: PropTypes.string,
-  keywordChange: PropTypes.func.isRequired,
-};

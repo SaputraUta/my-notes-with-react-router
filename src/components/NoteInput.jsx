@@ -1,78 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import ThemeContext from "../context/ThemeContext";
 
-class NoteInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-      body: "",
-    };
-    this.onSubmitEventHandler = this.onSubmitEventHandler.bind(this);
-    this.onTitleChangeHandler = this.onTitleChangeHandler.bind(this);
-    this.onBodyChangeHandler = this.onBodyChangeHandler.bind(this);
-  }
+function NoteInput({ addNote }) {
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const { theme } = React.useContext(ThemeContext);
 
-  onTitleChangeHandler(event) {
-    this.setState(() => {
-      return {
-        title: event.target.innerHTML,
-      };
-    });
-  }
+  const onTitleChangeHandler = (event) => {
+    setTitle(event.target.innerHTML);
+  };
 
-  onBodyChangeHandler(event) {
-    this.setState(() => {
-      return {
-        body: event.target.innerHTML,
-      };
-    });
-  }
+  const onBodyChangeHandler = (event) => {
+    setBody(event.target.innerHTML);
+  };
 
-  onSubmitEventHandler(event) {
+  const onSubmitEventHandler = (event) => {
     event.preventDefault();
-    this.props.addNote(this.state);
-    console.log(this.state);
-  }
-  render() {
-    return (
-      <form
-        onSubmit={this.onSubmitEventHandler}
-        className="w-full flex flex-col gap-2 relative"
+    addNote({ title, body });
+  };
+
+  return (
+    <form
+      onSubmit={onSubmitEventHandler}
+      className="w-full flex flex-col gap-2 relative"
+    >
+      <div
+        onInput={onTitleChangeHandler}
+        className={`w-full border-2 p-2 ${
+          theme === "light" ? "border-bb" : "border-bg text-tg"
+        }`}
+        contentEditable
+      />
+      <span
+        className={`absolute top-3 left-2 font-medium text-sm opacity-75 ${
+          theme === "light" ? "text-tb" : "text-tg"
+        }  ${title ? "hidden" : ""}`}
       >
-        <div
-          onInput={this.onTitleChangeHandler}
-          className="w-full border-2 border-bb p-2"
-          contentEditable
-        />
-        <span
-          className={`absolute top-3 left-2 font-medium text-sm text-tb opacity-75 ${
-            this.state.title ? "hidden" : ""
-          }`}
-        >
-          Title
-        </span>
-        <div
-          onInput={this.onBodyChangeHandler}
-          className="w-full border-2 border-bb p-2 h-32"
-          contentEditable
-        />
-        <span
-          className={`absolute top-16 left-2 text-sm font-medium text-tb opacity-75 ${
-            this.state.body ? "hidden" : ""
-          }`}
-        >
-          Body
-        </span>
-        <button
-          type="Submit"
-          className="w-full rounded-lg bg-cb p-2 text-tw font-bold tracking-widest"
-        >
-          Add
-        </button>
-      </form>
-    );
-  }
+        Title
+      </span>
+      <div
+        onInput={onBodyChangeHandler}
+        className={`w-full border-2 p-2 h-32 ${
+          theme === "light" ? "border-bb" : "border-bg text-tg"
+        }`}
+        contentEditable
+      />
+      <span
+        className={`absolute top-16 left-2 text-sm font-medium opacity-75 ${
+          theme === "light" ? "text-tb" : "text-tg"
+        } ${
+          body ? "hidden" : ""
+        }`}
+      >
+        Body
+      </span>
+      <button
+        type="Submit"
+        className={`w-full rounded-lg font-bold tracking-widest p-2 ${theme==="light" ? "bg-cb text-tw" : "bg-cw text-tb"}`}
+      >
+        Add
+      </button>
+    </form>
+  );
 }
 
 NoteInput.propTypes = {

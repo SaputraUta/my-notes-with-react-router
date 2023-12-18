@@ -19,7 +19,7 @@ export default function NoteItem({title, body, createdAt, archived, id, onDelete
             {showFormattedDate(createdAt)}
           </p>
         </div>
-        <p className="text-base text-tb">{parser(body)}</p>
+        <div className="text-base text-tb">{parser(body)}</div>
       </div>
       <div className="flex flex-col justify-center items-center px-5 gap-5">
         <DeleteButton onDelete={onDelete} id={id} />
