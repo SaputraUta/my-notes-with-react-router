@@ -9,20 +9,22 @@ import { useSearchParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import Header from "../components/Header";
 import ThemeContext from "../context/ThemeContext";
+import LocaleContext from "../context/LocaleContext";
 
 export default function ArchivedPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [archivedNotes, setArchivedNotes] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get("keyword");
   const [keyword, setKeyword] = useState(search || "");
   const { theme } = React.useContext(ThemeContext);
+  const { locale } = React.useContext(LocaleContext);
 
   useEffect(() => {
-    const fetchArchivedNotes = async () => {
-      const { data } = await getArchivedNotes();
+    getArchivedNotes().then(({ data }) => {
       setArchivedNotes(data);
-    };
-    fetchArchivedNotes();
+      setIsLoading(false);
+    });
   }, []);
 
   const onDeleteHandler = async (id) => {
@@ -43,7 +45,6 @@ export default function ArchivedPage() {
   const filteredArchivedNotes = archivedNotes.filter((note) => {
     return note.title.toLowerCase().includes(keyword.toLowerCase());
   });
-  console.log(archivedNotes);
   return (
     <>
       <Header />
@@ -54,11 +55,19 @@ export default function ArchivedPage() {
               theme === "light" ? "text-tb" : "text-tw"
             } my-5`}
           >
-            Archived notes
+            {locale === "id" ? "Notes arsip" : "Archived notes"}
           </h2>
           <SearchBar keyword={keyword} keywordChange={onKeywordChangeHandler} />
         </div>
-        {archivedNotes.length > 0 ? (
+        {isLoading ? (
+          <p
+            className={`${
+              theme === "light" ? "text-tb" : "text-tw"
+            } font-medium text-xl`}
+          >
+            {locale === "id" ? "Memuat data..." : "Loading data..."}
+          </p>
+        ) : archivedNotes.length > 0 ? (
           <NoteList
             notes={filteredArchivedNotes}
             onDelete={onDeleteHandler}
@@ -70,7 +79,7 @@ export default function ArchivedPage() {
               theme === "light" ? "text-tb" : "text-tw"
             }`}
           >
-            Tidak ada catatan arsip
+            {locale === "id" ? "Tidak ada catatan arsip" : "No archived note"}
           </p>
         )}
       </div>

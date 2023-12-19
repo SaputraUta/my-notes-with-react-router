@@ -1,7 +1,9 @@
 import React from "react";
 import ThemeContext from "../context/ThemeContext";
+import LocaleContext from "../context/LocaleContext";
 
 export default function PageNotFound() {
+  const { locale } = React.useContext(LocaleContext);
   const { theme } = React.useContext(ThemeContext);
   return (
     <div className="h-screen flex justify-center items-center">
@@ -10,7 +12,7 @@ export default function PageNotFound() {
           theme === "light" ? "text-tb" : "text-tw"
         }`}
       >
-        404 Page Not Found
+        {locale === "id" ? "404 Halaman Tidak Ditemukan" : "404 Page Not Found"}
       </h1>
     </div>
   );

@@ -13,7 +13,11 @@ export default function LoginPage({ loginSuccess }) {
     }
   }
   return (
-    <div className={`w-full flex justify-center ${theme==="light"? "bg-cw" : "bg-cb2"}`}>
+    <div
+      className={`w-full flex justify-center ${
+        theme === "light" ? "bg-cw" : "bg-cb2"
+      }`}
+    >
       <InputLogin login={onLoginHandler} />
     </div>
   );

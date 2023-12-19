@@ -5,11 +5,12 @@ import { MdAddCircle } from "react-icons/md";
 import { RiArchiveDrawerFill } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
 import ThemeSwitch from "./ThemeSwitch";
+import LocaleSwitch from "./LocaleSwitch";
 
 export default function Navigation({ logout }) {
   return (
     <div className="relative">
-      <div className="mt-5 fixed left-0 top-1/4 bg-gray-300 rounded-r-lg">
+      <div className="mt-5 fixed left-0 top-[15%] bg-gray-300 rounded-r-lg">
         <ul className="flex flex-col gap-8 items-center p-5">
           <li>
             <Link to="/">
@@ -33,6 +34,9 @@ export default function Navigation({ logout }) {
           </li>
           <li>
             <ThemeSwitch />
+          </li>
+          <li>
+            <LocaleSwitch />
           </li>
         </ul>
       </div>

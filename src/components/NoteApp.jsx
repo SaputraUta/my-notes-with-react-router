@@ -10,11 +10,13 @@ import RegisterPage from "../pages/RegisterPage";
 import { getUserLogged, putAccessToken } from "../utils/network-data";
 import Navigation from "./Navigation";
 import ThemeContext from "../context/ThemeContext";
+import LocaleContext from "../context/LocaleContext";
 
 export default function NoteApp() {
   const [authedUser, setAuthedUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [locale, setLocale] = useState(localStorage.getItem("locale") || "id");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -45,12 +47,27 @@ export default function NoteApp() {
     });
   };
 
+  const toggleLocale = () => {
+    setLocale((prevLocale) => {
+      const newLocale = prevLocale === "id" ? "en" : "id";
+      localStorage.setItem("locale", newLocale);
+      return newLocale;
+    });
+  };
+
   const ThemeContextValue = useMemo(() => {
     return {
       theme,
       toggleTheme,
     };
   }, [theme]);
+
+  const LocaleContextValue = useMemo(() => {
+    return {
+      locale,
+      toggleLocale,
+    };
+  }, [locale]);
 
   if (initializing) {
     return null;
@@ -59,17 +76,19 @@ export default function NoteApp() {
     return (
       <>
         <ThemeContext.Provider value={ThemeContextValue}>
-          <div>
-            <main>
-              <Routes>
-                <Route
-                  path="/*"
-                  element={<LoginPage loginSuccess={onLoginSuccess} />}
-                />
-                <Route path="/register" element={<RegisterPage />} />
-              </Routes>
-            </main>
-          </div>
+          <LocaleContext.Provider value={LocaleContextValue}>
+            <div>
+              <main>
+                <Routes>
+                  <Route
+                    path="/*"
+                    element={<LoginPage loginSuccess={onLoginSuccess} />}
+                  />
+                  <Route path="/register" element={<RegisterPage />} />
+                </Routes>
+              </main>
+            </div>
+          </LocaleContext.Provider>
         </ThemeContext.Provider>
       </>
     );
@@ -77,22 +96,24 @@ export default function NoteApp() {
   return (
     <>
       <ThemeContext.Provider value={ThemeContextValue}>
-        <div
-          className={`min-h-screen ${
-            theme === "light" ? "bg-white" : "bg-cb2"
-          }`}
-        >
-          <Navigation logout={onLogout} />
-          <main>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/add" element={<AddPage />} />
-              <Route path="/archived" element={<ArchivedPage />} />
-              <Route path="/notes/:id" element={<NoteDetailPageWrapper />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          </main>
-        </div>
+        <LocaleContext.Provider value={LocaleContextValue}>
+          <div
+            className={`min-h-screen ${
+              theme === "light" ? "bg-white" : "bg-cb2"
+            }`}
+          >
+            <Navigation logout={onLogout} />
+            <main>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/add" element={<AddPage />} />
+                <Route path="/archived" element={<ArchivedPage />} />
+                <Route path="/notes/:id" element={<NoteDetailPageWrapper />} />
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
+            </main>
+          </div>
+        </LocaleContext.Provider>
       </ThemeContext.Provider>
     </>
   );

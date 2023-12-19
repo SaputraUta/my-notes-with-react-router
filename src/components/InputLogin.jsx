@@ -3,14 +3,20 @@ import useInput from "../hooks/useInput";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import ThemeContext from "../context/ThemeContext";
+import LocaleContext from "../context/LocaleContext";
+import { useState } from "react";
 
 export default function InputLogin({ login }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, onEmailChange] = useInput("");
   const [password, onPasswordChange] = useInput("");
   const { theme } = React.useContext(ThemeContext);
-  const onSubmitHandler = (event) => {
+  const { locale } = React.useContext(LocaleContext);
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
-    login({ email: email, password: password });
+    setIsLoading(true);
+    await login({ email: email, password: password });
+    setIsLoading(false);
   };
   return (
     <div className="flex flex-col w-full h-screen">
@@ -19,7 +25,7 @@ export default function InputLogin({ login }) {
           theme === "light" ? "text-slate-800" : "text-tg"
         }`}
       >
-        Aplikasi Kontak
+        {locale === "id" ? "Aplikasi kontak" : "Contacts app"}
       </h1>
       <form
         onSubmit={onSubmitHandler}
@@ -41,13 +47,20 @@ export default function InputLogin({ login }) {
           placeholder="Password"
           className="rounded-lg p-2 w-1/2 focus:outline-none"
         />
+        <p
+          className={`${theme === "light" ? "text-slate-800" : "text-tg"} ${
+            isLoading ? "block" : "hidden"
+          }`}
+        >
+          {locale === "id" ? "Mencoba masuk..." : "Trying to log in..."}
+        </p>
         <button
           type="submit"
           className={`w-1/2 p-2 rounded-lg font-bold ${
             theme === "light" ? "bg-cb text-tg" : "bg-cg text-tb"
           }`}
         >
-          Masuk
+          {locale === "id" ? "Masuk" : "Login"}
         </button>
       </form>
       <p
@@ -55,9 +68,9 @@ export default function InputLogin({ login }) {
           theme === "light" ? "text-slate-800" : "text-tg"
         }`}
       >
-        Belum punya akun?{" "}
+        {locale === "id" ? "Belum punya akun? " : "Don't have an account yet? "}
         <Link to="register" className="underline">
-          Registrasi disini
+          {locale === "id" ? "Registrasi disini" : "Register here"}
         </Link>
       </p>
     </div>

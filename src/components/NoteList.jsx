@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import NoteItem from "./NoteItem";
 import PropTypes from "prop-types";
-import { getActiveNotes } from "../utils/network-data";
 
 export default function NoteList({ notes, onDelete, onArchive }) {
-
   return (
     <>
       <div className="mt-5 w-full">

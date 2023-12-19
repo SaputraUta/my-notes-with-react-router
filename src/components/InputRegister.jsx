@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import useInput from "../hooks/useInput";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import ThemeContext from "../context/ThemeContext";
+import LocaleContext from "../context/LocaleContext";
 
 export default function InputRegister({ register }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [name, onNameChange] = useInput("");
   const [email, onEmailChange] = useInput("");
   const [password, onPasswordChange] = useInput("");
   const { theme } = React.useContext(ThemeContext);
-  const onSubmitHandler = (event) => {
+  const { locale } = React.useContext(LocaleContext);
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
-    register({ name: name, email: email, password: password });
+    setIsLoading(true);
+    await register({ name: name, email: email, password: password });
+    setIsLoading(false);
   };
   return (
     <div className="flex flex-col w-full h-screen">
@@ -20,7 +25,7 @@ export default function InputRegister({ register }) {
           theme === "light" ? "text-slate-800" : "text-tg"
         }`}
       >
-        Daftar akun
+        {locale === "id" ? "Daftar akun" : "Register account"}
       </h1>
       <form
         onSubmit={onSubmitHandler}
@@ -50,21 +55,30 @@ export default function InputRegister({ register }) {
           placeholder="Password"
           className="rounded-lg p-2 w-1/2 focus:outline-none"
         />
+        <p
+          className={`${theme === "light" ? "text-slate-800" : "text-tg"} ${
+            isLoading ? "block" : "hidden"
+          }`}
+        >
+          {locale === "id" ? "Mendaftarkan akun..." : "Registering account..."}
+        </p>
         <button
           type="submit"
           className={`w-1/2 p-2 rounded-lg font-bold ${
             theme === "light" ? "bg-cb text-tg" : "bg-cg text-tb"
           }`}
         >
-          Daftar
+          {locale === "id" ? "Daftar" : "Register"}
         </button>
       </form>
-      <p className={`text-center mt-5 ${
+      <p
+        className={`text-center mt-5 ${
           theme === "light" ? "text-slate-800" : "text-tg"
-        }`}>
-        Kembali ke{" "}
+        }`}
+      >
+        {locale === "id" ? "Kembali ke " : "Back to "}
         <Link to="/" className="underline">
-          masuk
+          {locale === "id" ? "masuk" : "login"}
         </Link>
       </p>
     </div>

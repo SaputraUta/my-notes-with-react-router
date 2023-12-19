@@ -14,7 +14,11 @@ export default function RegisterPage() {
     }
   }
   return (
-    <div className={`w-full flex justify-center ${theme==="light"? "bg-cw" : "bg-cb2"}`}>
+    <div
+      className={`w-full flex justify-center ${
+        theme === "light" ? "bg-cw" : "bg-cb2"
+      }`}
+    >
       <InputRegister register={onRegisterHandler} />
     </div>
   );

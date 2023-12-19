@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ThemeContext from "../context/ThemeContext";
+import LocaleContext from "../context/LocaleContext";
 
 function NoteInput({ addNote }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const { theme } = React.useContext(ThemeContext);
+  const { locale } = React.useContext(LocaleContext);
 
   const onTitleChangeHandler = (event) => {
     setTitle(event.target.innerHTML);
@@ -37,7 +39,7 @@ function NoteInput({ addNote }) {
           theme === "light" ? "text-tb" : "text-tg"
         }  ${title ? "hidden" : ""}`}
       >
-        Title
+        {locale === "id" ? "Judul" : "Title"}
       </span>
       <div
         onInput={onBodyChangeHandler}
@@ -49,17 +51,17 @@ function NoteInput({ addNote }) {
       <span
         className={`absolute top-16 left-2 text-sm font-medium opacity-75 ${
           theme === "light" ? "text-tb" : "text-tg"
-        } ${
-          body ? "hidden" : ""
-        }`}
+        } ${body ? "hidden" : ""}`}
       >
-        Body
+        {locale === "id" ? "Isi" : "Body"}
       </span>
       <button
         type="Submit"
-        className={`w-full rounded-lg font-bold tracking-widest p-2 ${theme==="light" ? "bg-cb text-tw" : "bg-cw text-tb"}`}
+        className={`w-full rounded-lg font-bold tracking-widest p-2 ${
+          theme === "light" ? "bg-cb text-tw" : "bg-cw text-tb"
+        }`}
       >
-        Add
+        {locale === "id" ? "Tambah" : "Title"}
       </button>
     </form>
   );

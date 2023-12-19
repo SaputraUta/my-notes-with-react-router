@@ -7,7 +7,15 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import parser from "html-react-parser";
 
-export default function NoteItem({title, body, createdAt, archived, id, onDelete, onArchive}) {
+export default function NoteItem({
+  title,
+  body,
+  createdAt,
+  archived,
+  id,
+  onDelete,
+  onArchive,
+}) {
   return (
     <div className="flex justify-between w-full bg-cw h-fit9 rounded-lg">
       <div className="flex flex-col gap-2 p-2">

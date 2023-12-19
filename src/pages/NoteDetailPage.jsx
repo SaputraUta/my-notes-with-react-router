@@ -4,19 +4,22 @@ import NoteDetail from "../components/NoteDetail";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import ThemeContext from "../context/ThemeContext";
+import LocaleContext from "../context/LocaleContext";
 
 export default function NoteDetailPage() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [note, setNote] = useState();
   const { id } = useParams();
   const { theme } = React.useContext(ThemeContext);
+  const { locale } = React.useContext(LocaleContext);
   useEffect(() => {
+    setIsLoading(true);
     const getNoteDetail = async (id) => {
       const { data } = await getNote(id);
       setNote(data);
+      setIsLoading(false);
     };
     getNoteDetail(id);
-    setIsLoading(false);
     return () => {
       setNote({});
     };
@@ -29,7 +32,7 @@ export default function NoteDetailPage() {
           theme === "light" ? "text-tb" : "text-tg"
         }`}
       >
-        Loading note...
+        {locale === "id" ? "Memuat note..." : "Loading note..."}
       </p>
     );
   }
@@ -41,7 +44,7 @@ export default function NoteDetailPage() {
           theme === "light" ? "text-tb" : "text-tg"
         }`}
       >
-        Note is not found!
+        {locale === "id" ? "Note tidak ditemukan!" : "Note is not found!"}
       </p>
     );
   }

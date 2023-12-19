@@ -5,17 +5,21 @@ import SearchBar from "../components/SearchBar";
 import { deleteNote, getActiveNotes, archiveNote } from "../utils/network-data";
 import Header from "../components/Header";
 import ThemeContext from "../context/ThemeContext";
+import LocaleContext from "../context/LocaleContext";
 
 export default function HomePage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [activeNotes, setActiveNotes] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get("keyword");
   const [keyword, setKeyword] = useState(search || "");
   const { theme } = React.useContext(ThemeContext);
+  const { locale } = React.useContext(LocaleContext);
 
   useEffect(() => {
     getActiveNotes().then(({ data }) => {
       setActiveNotes(data);
+      setIsLoading(false);
     });
   }, []);
 
@@ -47,11 +51,19 @@ export default function HomePage() {
               theme === "light" ? "text-tb" : "text-tw"
             } my-5`}
           >
-            Active notes
+            {locale === "id" ? "Notes aktif" : "Active notes"}
           </h2>
           <SearchBar keyword={keyword} keywordChange={onKeywordChangeHandler} />
         </div>
-        {activeNotes.length > 0 ? (
+        {isLoading ? (
+          <p
+            className={`${
+              theme === "light" ? "text-tb" : "text-tw"
+            } font-medium text-xl`}
+          >
+            {locale === "id" ? "Memuat data..." : "Loading data..."}
+          </p>
+        ) : activeNotes.length > 0 ? (
           <NoteList
             notes={filteredActiveNotes}
             onDelete={onDeleteHandler}
@@ -63,7 +75,7 @@ export default function HomePage() {
               theme === "light" ? "text-tb" : "text-tw"
             }`}
           >
-            Tidak ada catatan aktif
+            {locale === "id" ? "Tidak ada catatan aktif" : "No active note"}
           </p>
         )}
       </div>

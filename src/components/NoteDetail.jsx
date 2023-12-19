@@ -13,7 +13,7 @@ export default function NoteDetail({ title, body, createdAt, archived }) {
           {archived ? <span>(archived)</span> : <span>(active)</span>}
         </p>
       </div>
-      <p className="text-tb">{parser(body)}</p>
+      <div className="text-tb">{parser(body)}</div>
     </div>
   );
 }
