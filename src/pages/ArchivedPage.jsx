@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  getArchivedNotes,
-  deleteNote,
-  unarchiveNote,
-} from "../utils/network-data";
+import { getArchivedNotes, deleteNote, unarchiveNote } from "../utils/network-data";
 import NoteList from "../components/NoteList";
 import { useSearchParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";

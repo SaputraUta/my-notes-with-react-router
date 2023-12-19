@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import NoteItem from "./NoteItem";
 import PropTypes from "prop-types";
 

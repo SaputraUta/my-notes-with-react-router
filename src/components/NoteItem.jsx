@@ -1,5 +1,5 @@
 import React from "react";
-import { showFormattedDate } from "../utils/local-data";
+import { showFormattedDate } from "../utils/network-data";
 import ArchivedButton from "./ArchivedButton";
 import UnarchivedButton from "./UnarchivedButton";
 import DeleteButton from "./DeleteButton";

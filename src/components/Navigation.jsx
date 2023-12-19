@@ -6,6 +6,7 @@ import { RiArchiveDrawerFill } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
 import ThemeSwitch from "./ThemeSwitch";
 import LocaleSwitch from "./LocaleSwitch";
+import PropTypes from "prop-types";
 
 export default function Navigation({ logout }) {
   return (
@@ -43,3 +44,7 @@ export default function Navigation({ logout }) {
     </div>
   );
 }
+
+Navigation.propTypes = {
+  logout: PropTypes.func.isRequired,
+};

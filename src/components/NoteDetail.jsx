@@ -1,5 +1,5 @@
 import React from "react";
-import { showFormattedDate } from "../utils/local-data";
+import { showFormattedDate } from "../utils/network-data";
 import PropTypes from "prop-types";
 import parser from "html-react-parser";
 

@@ -36,7 +36,7 @@ export default function InputRegister({ register }) {
           name="name"
           value={name}
           onChange={onNameChange}
-          placeholder="Username"
+          placeholder="Name"
           className="rounded-lg p-2 w-1/2 focus:outline-none"
         />
         <input

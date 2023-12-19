@@ -2,20 +2,13 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ThemeContext from "../context/ThemeContext";
 import LocaleContext from "../context/LocaleContext";
+import useContentEditable from "../hooks/useContentEditable";
 
 function NoteInput({ addNote }) {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [title, onTitleChange] = useContentEditable("");
+  const [body, onBodyChange] = useContentEditable("");
   const { theme } = React.useContext(ThemeContext);
   const { locale } = React.useContext(LocaleContext);
-
-  const onTitleChangeHandler = (event) => {
-    setTitle(event.target.innerHTML);
-  };
-
-  const onBodyChangeHandler = (event) => {
-    setBody(event.target.innerHTML);
-  };
 
   const onSubmitEventHandler = (event) => {
     event.preventDefault();
@@ -28,7 +21,7 @@ function NoteInput({ addNote }) {
       className="w-full flex flex-col gap-2 relative"
     >
       <div
-        onInput={onTitleChangeHandler}
+        onInput={onTitleChange}
         className={`w-full border-2 p-2 ${
           theme === "light" ? "border-bb" : "border-bg text-tg"
         }`}
@@ -42,7 +35,7 @@ function NoteInput({ addNote }) {
         {locale === "id" ? "Judul" : "Title"}
       </span>
       <div
-        onInput={onBodyChangeHandler}
+        onInput={onBodyChange}
         className={`w-full border-2 p-2 h-32 ${
           theme === "light" ? "border-bb" : "border-bg text-tg"
         }`}
