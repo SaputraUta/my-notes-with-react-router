@@ -21,11 +21,11 @@ export default function InputLogin({ login }) {
   return (
     <div className="flex flex-col w-full h-screen">
       <h1
-        className={`text-3xl font-bold tracking-wider mt-32 text-center ${
+        className={`text-3xl sm:text-4xl md:text-5xl font-bold tracking-wider mt-44 lg:mt-32 text-center ${
           theme === "light" ? "text-slate-800" : "text-tg"
         }`}
       >
-        {locale === "id" ? "Aplikasi kontak" : "Contacts app"}
+        {locale === "id" ? "Aplikasi catatan" : "Notes app"}
       </h1>
       <form
         onSubmit={onSubmitHandler}
@@ -37,7 +37,7 @@ export default function InputLogin({ login }) {
           value={email}
           onChange={onEmailChange}
           placeholder="Email"
-          className="rounded-lg p-2 w-1/2 focus:outline-none"
+          className="rounded-lg text-sm sm:text-base p-2 w-3/4 lg:w-1/2 focus:outline-none"
         />
         <input
           type="password"
@@ -45,7 +45,7 @@ export default function InputLogin({ login }) {
           value={password}
           onChange={onPasswordChange}
           placeholder="Password"
-          className="rounded-lg p-2 w-1/2 focus:outline-none"
+          className="rounded-lg text-sm sm:text-base p-2 w-3/4 lg:w-1/2 focus:outline-none"
         />
         <p
           className={`${theme === "light" ? "text-slate-800" : "text-tg"} ${
@@ -56,7 +56,7 @@ export default function InputLogin({ login }) {
         </p>
         <button
           type="submit"
-          className={`w-1/2 p-2 rounded-lg font-bold ${
+          className={`w-3/4 text-sm sm:text-base lg:w-1/2 p-2 rounded-lg font-bold ${
             theme === "light" ? "bg-cb text-tg" : "bg-cg text-tb"
           }`}
         >
@@ -64,7 +64,7 @@ export default function InputLogin({ login }) {
         </button>
       </form>
       <p
-        className={`text-center mt-5 ${
+        className={`text-center text-sm sm:text-base mt-5 ${
           theme === "light" ? "text-slate-800" : "text-tg"
         }`}
       >

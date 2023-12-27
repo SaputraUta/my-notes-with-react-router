@@ -21,7 +21,7 @@ export default function InputRegister({ register }) {
   return (
     <div className="flex flex-col w-full h-screen">
       <h1
-        className={`text-3xl font-bold tracking-wider mt-32 text-center ${
+        className={`text-3xl sm:text-4xl md:text-5xl font-bold tracking-wider mt-36 lg:mt-32 text-center ${
           theme === "light" ? "text-slate-800" : "text-tg"
         }`}
       >
@@ -37,7 +37,7 @@ export default function InputRegister({ register }) {
           value={name}
           onChange={onNameChange}
           placeholder="Name"
-          className="rounded-lg p-2 w-1/2 focus:outline-none"
+          className="rounded-lg text-sm sm:text-base p-2 w-3/4 lg:w-1/2 focus:outline-none"
         />
         <input
           type="email"
@@ -45,7 +45,7 @@ export default function InputRegister({ register }) {
           value={email}
           onChange={onEmailChange}
           placeholder="Email"
-          className="rounded-lg p-2 w-1/2 focus:outline-none"
+          className="rounded-lg text-sm sm:text-base p-2 w-3/4 lg:w-1/2 focus:outline-none"
         />
         <input
           type="password"
@@ -53,7 +53,7 @@ export default function InputRegister({ register }) {
           value={password}
           onChange={onPasswordChange}
           placeholder="Password"
-          className="rounded-lg p-2 w-1/2 focus:outline-none"
+          className="rounded-lg text-sm sm:text-base p-2 w-3/4 lg:w-1/2 focus:outline-none"
         />
         <p
           className={`${theme === "light" ? "text-slate-800" : "text-tg"} ${
@@ -64,7 +64,7 @@ export default function InputRegister({ register }) {
         </p>
         <button
           type="submit"
-          className={`w-1/2 p-2 rounded-lg font-bold ${
+          className={`w-3/4 lg:w-1/2 p-2 text-sm sm:text-base rounded-lg font-bold ${
             theme === "light" ? "bg-cb text-tg" : "bg-cg text-tb"
           }`}
         >
@@ -72,7 +72,7 @@ export default function InputRegister({ register }) {
         </button>
       </form>
       <p
-        className={`text-center mt-5 ${
+        className={`text-center text-sm sm:text-base mt-5 ${
           theme === "light" ? "text-slate-800" : "text-tg"
         }`}
       >
