@@ -7,7 +7,7 @@ export default function SearchBar({ keyword, keywordChange }) {
   const { locale } = React.useContext(LocaleContext);
   return (
     <div className="relative">
-      <IoIosSearch className="absolute top-2 left-2" size={25} />
+      <IoIosSearch className="absolute top-1 sm:top-2 left-2" size={25} />
       <input
         type="text"
         placeholder={`${
@@ -15,7 +15,7 @@ export default function SearchBar({ keyword, keywordChange }) {
         }`}
         value={keyword}
         onChange={(event) => keywordChange(event.target.value)}
-        className="border-2 h-10 border-blue-950 rounded-lg px-2 pl-8"
+        className="border-2 h-8 sm:h-10 text-sm sm:text-base md:text-lg border-blue-950 rounded-lg px-2 pl-8"
       />
     </div>
   );

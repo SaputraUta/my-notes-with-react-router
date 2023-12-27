@@ -44,22 +44,27 @@ export default function ArchivedPage() {
   return (
     <>
       <Header />
-      <div className="mx-20">
-        <div className="flex justify-between items-center">
+      <div className="mx-10 sm:mx-20">
+      <div className="flex flex-col mt-5 sm:my-5 sm:flex-row sm:justify-between sm:items-center">
           <h2
-            className={`font-semibold text-3xl ${
+            className={`font-semibold text-xl sm:text-2xl md:text-3xl ${
               theme === "light" ? "text-tb" : "text-tw"
-            } my-5`}
+            }`}
           >
             {locale === "id" ? "Notes arsip" : "Archived notes"}
           </h2>
-          <SearchBar keyword={keyword} keywordChange={onKeywordChangeHandler} />
+          <div className="mt-2 sm:mt-0">
+            <SearchBar
+              keyword={keyword}
+              keywordChange={onKeywordChangeHandler}
+            />
+          </div>
         </div>
         {isLoading ? (
           <p
             className={`${
               theme === "light" ? "text-tb" : "text-tw"
-            } font-medium text-xl`}
+            } font-medium text-base sm:text-lg md:text-xl`}
           >
             {locale === "id" ? "Memuat data..." : "Loading data..."}
           </p>
@@ -71,7 +76,7 @@ export default function ArchivedPage() {
           />
         ) : (
           <p
-            className={`text-center font-bold ${
+            className={`text-base sm:text-lg md:text-xl text-center font-bold ${
               theme === "light" ? "text-tb" : "text-tw"
             }`}
           >

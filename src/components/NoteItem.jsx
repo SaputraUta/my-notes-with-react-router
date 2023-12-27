@@ -17,19 +17,19 @@ export default function NoteItem({
   onArchive,
 }) {
   return (
-    <div className="flex justify-between w-full bg-cw h-fit9 rounded-lg">
+    <div className="flex flex-col sm:flex-row sm:justify-between w-full bg-cw h-fit9 rounded-lg">
       <div className="flex flex-col gap-2 p-2">
         <div className="flex flex-col gap-1">
-          <Link to={`/notes/${id}`} className="text-xl text-tb font-semibold">
+          <Link to={`/notes/${id}`} className="text-base sm:text-lg md:text-xl text-tb font-semibold">
             {parser(title)}
           </Link>
-          <p className="text-sm font-light text-tb">
+          <p className="text-[10px] sm:text-sm md:text-base font-light text-tb">
             {showFormattedDate(createdAt)}
           </p>
         </div>
-        <div className="text-base text-tb">{parser(body)}</div>
+        <div className="text-xs sm:text-sm md:text-base text-tb">{parser(body)}</div>
       </div>
-      <div className="flex flex-col justify-center items-center px-5 gap-5">
+      <div className="p-4 sm:p-2 flex flex-row self-end sm:self-auto sm:flex-col justify-center items-center px-5 gap-5">
         <DeleteButton onDelete={onDelete} id={id} />
         {archived ? (
           <UnarchivedButton onUnarchive={onArchive} id={id} />

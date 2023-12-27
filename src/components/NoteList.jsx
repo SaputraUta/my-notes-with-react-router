@@ -6,7 +6,7 @@ export default function NoteList({ notes, onDelete, onArchive }) {
   return (
     <>
       <div className="mt-5 w-full">
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-5 sm:gap-10">
           {notes.map((note) => (
             <NoteItem
               key={note.id}

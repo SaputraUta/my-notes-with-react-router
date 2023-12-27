@@ -11,8 +11,8 @@ import PropTypes from "prop-types";
 export default function Navigation({ logout }) {
   return (
     <div className="relative">
-      <div className="mt-5 fixed left-0 top-[15%] bg-gray-300 rounded-r-lg">
-        <ul className="flex flex-col gap-8 items-center p-5">
+      <div className="mt-5 w-full sm:w-fit fixed sm:left-0 bottom-0 sm:bottom-auto sm:top-[15%] bg-gray-300 rounded-r-lg">
+        <ul className="flex sm:flex-col gap-8 items-center p-5">
           <li>
             <Link to="/">
               <FaHome size={30} />

@@ -28,7 +28,7 @@ export default function NoteDetailPage() {
   if (isLoading) {
     return (
       <p
-        className={`text-center h-screen font-bold ${
+        className={`text-center mt-10 h-screen font-bold ${
           theme === "light" ? "text-tb" : "text-tg"
         }`}
       >
@@ -40,7 +40,7 @@ export default function NoteDetailPage() {
   if (!note) {
     return (
       <p
-        className={`mx-20 text-2xl font-bold text-center ${
+        className={`mx-10 sm:mx-20 text-2xl font-bold text-center ${
           theme === "light" ? "text-tb" : "text-tg"
         }`}
       >
@@ -52,7 +52,7 @@ export default function NoteDetailPage() {
   return (
     <>
       <Header />
-      <section className="mx-20 mt-5 bg-cw rounded-lg">
+      <section className="mx-10 sm:mx-20 mt-5 bg-cw rounded-lg">
         <NoteDetail {...note} />
       </section>
     </>
