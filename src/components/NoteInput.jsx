@@ -22,13 +22,13 @@ function NoteInput({ addNote }) {
     >
       <div
         onInput={onTitleChange}
-        className={`w-full border-2 p-2 ${
+        className={`w-full border-2 p-2 text-xs sm:text-sm md:text-base ${
           theme === "light" ? "border-bb" : "border-bg text-tg"
         }`}
         contentEditable
       />
       <span
-        className={`absolute top-3 left-2 font-medium text-sm opacity-75 ${
+        className={`absolute top-3 left-2 font-medium text-xs sm:text-sm md:text-base opacity-75 ${
           theme === "light" ? "text-tb" : "text-tg"
         }  ${title ? "hidden" : ""}`}
       >
@@ -36,13 +36,13 @@ function NoteInput({ addNote }) {
       </span>
       <div
         onInput={onBodyChange}
-        className={`w-full border-2 p-2 h-32 ${
+        className={`w-full border-2 p-2 h-32 text-xs sm:text-sm md:text-base ${
           theme === "light" ? "border-bb" : "border-bg text-tg"
         }`}
         contentEditable
       />
       <span
-        className={`absolute top-16 left-2 text-sm font-medium opacity-75 ${
+        className={`absolute top-12 sm:top-16 left-2 text-xs sm:text-sm md:text-base font-medium opacity-75 ${
           theme === "light" ? "text-tb" : "text-tg"
         } ${body ? "hidden" : ""}`}
       >
@@ -50,7 +50,7 @@ function NoteInput({ addNote }) {
       </span>
       <button
         type="Submit"
-        className={`w-full rounded-lg font-bold tracking-widest p-2 ${
+        className={`w-full rounded-lg font-bold text-xs sm:text-sm md:text-base tracking-widest p-2 ${
           theme === "light" ? "bg-cb text-tw" : "bg-cw text-tb"
         }`}
       >

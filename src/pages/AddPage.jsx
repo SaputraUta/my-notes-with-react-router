@@ -17,11 +17,11 @@ export default function AddPage() {
   return (
     <>
       <Header />
-      <div className="mx-20">
+      <div className="mx-10 sm:mx-20">
         <h2
-          className={`font-semibold text-3xl ${
+          className={`font-semibold text-xl sm:text-2xl md:text-3xl my-5 ${
             theme === "light" ? "text-tb" : "text-tw"
-          } my-5`}
+          }`}
         >
           {locale === "id" ? "Tambah catatan" : "Add notes"}
         </h2>
